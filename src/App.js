@@ -5,8 +5,15 @@ import Navbar from './Components/Navbar/Navbar';
 
 function App() {
   const [guns, setGuns] = useState([]);
-  // const [cart, setCart] = useState([]);
-  console.log(guns);
+  const [cart, setCart] = useState([]);
+  console.log(cart);
+
+  const handleAddToCart = (gunData) => {
+    // console.log(gunData);
+    //* copy previous cart Array and added new gunData object
+    const newCart = [...cart, gunData];
+    setCart(newCart);
+  };
 
   useEffect(() => {
     fetch(`https://raw.githubusercontent.com/mir-hussain/guns/main/data.json`)
@@ -16,11 +23,15 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar></Navbar>
+      <Navbar cart={cart}></Navbar>
 
       <div className="card-container">
         {guns.map((gun, index) => (
-          <Card key={index} gunData={gun}></Card>
+          <Card
+            key={index}
+            gunData={gun}
+            handleAddToCart={handleAddToCart}
+          ></Card>
         ))}
       </div>
     </div>
